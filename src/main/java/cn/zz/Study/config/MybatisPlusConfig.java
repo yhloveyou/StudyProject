@@ -1,5 +1,6 @@
 package cn.zz.Study.config;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
@@ -43,7 +45,12 @@ public class MybatisPlusConfig {
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("jobob");
+        //去掉Service接口的首字母I
         gc.setServiceName("%sService");
+        //主键策略
+        gc.setIdType(IdType.AUTO);
+        //定义生成的实体类中日期类型
+        gc.setDateType(DateType.ONLY_DATE);
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
@@ -119,13 +126,18 @@ public class MybatisPlusConfig {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        //生成策略配置  取消下划线
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-
         //注释该行 默认生成全部
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName());
+//        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        //实体类名称驼峰命名
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        //列名名称驼峰命名
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        //生成 @RestController 控制器
+        strategy.setRestControllerStyle(true);
+        //Controller 的url带-
+//        strategy.setControllerMappingHyphenStyle(true);
+        //表明前缀
+//        strategy.setTablePrefix(pc.getModuleName());
         // 是否使用Lombok优化代码
         strategy.setEntityLombokModel(true);
         mpg.setStrategy(strategy);

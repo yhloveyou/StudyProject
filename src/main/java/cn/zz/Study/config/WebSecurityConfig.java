@@ -47,25 +47,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //开启跨域
-        http.cors()
-                //关闭csrf防护 >只有关闭了,才能接受来自表单的请求
-                .and().csrf().disable()
-                //使用Spring自带的登录页，登陆成功跳转的页面
-                .formLogin().successForwardUrl("/index")
+        //关闭csrf防护 >只有关闭了,才能接受来自表单的请求
+        http.csrf().disable()
+                //开启跨域
+                .cors().and()
+                //使用Spring自带的登录页，登陆成功跳转的页面（必须是Post请求）
+                .formLogin()
+                .successForwardUrl("/user/index")
                 .and()
                 //开启授权请求
                 .authorizeRequests()
-                //拦截所有请求
-                .anyRequest()
-                //所有请求都需要身份验证
-                .authenticated()
+                .antMatchers("/user/**").permitAll()
+                //拦截所有请求，所有请求都需要身份验证
+                .anyRequest().authenticated();
 
-        ;
-
-
-
-
-        http.csrf().disable();
     }
 }

@@ -31,6 +31,6 @@ public class UserDetialsServiceImpl implements UserDetailsService {
         authorityList.add(authority);
         SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority("user:add");
         authorityList.add(authority1);
-        return new User("admin","admin",authorityList);
+        return new User("admin","$2a$10$kkPpRCSQJii1BdV77TqAbuWtBFAvtUGqFor.AbyGxGT.avFH/buU2",authorityList);
     }
 }
