@@ -45,6 +45,8 @@ public class redisTest {
         redisTemplate.opsForList().range("大罪", 0, -1);//获取所有元素，也可获取从Start ==>>  end的元素
 
 
+        //配置工具类后
+        RedisUtil.set("大罪","愤怒",10);
     }
 
 }

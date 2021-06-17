@@ -1,4 +1,4 @@
-package cn.zz.Study.SecurityImp;
+package cn.zz.Study.service.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
