@@ -122,10 +122,8 @@ public class MybatisPlusConfig {
         //生成策略配置  取消下划线
         strategy.setNaming(NamingStrategy.underline_to_camel);
 
-        // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id");
         //注释该行 默认生成全部
-//        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName());
         // 是否使用Lombok优化代码

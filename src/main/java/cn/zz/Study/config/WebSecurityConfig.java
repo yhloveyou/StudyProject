@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //关闭csrf防护 >只有关闭了,才能接受来自表单的请求
                 .and().csrf().disable()
                 //使用Spring自带的登录页，登陆成功跳转的页面
-                .formLogin().successForwardUrl("")
+                .formLogin().successForwardUrl("/index")
                 .and()
                 //开启授权请求
                 .authorizeRequests()

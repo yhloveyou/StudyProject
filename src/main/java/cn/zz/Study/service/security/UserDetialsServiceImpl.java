@@ -1,9 +1,15 @@
 package cn.zz.Study.service.security;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UserDetailsService接口用于返回用户相关数据。它有loadUserByUsername()方法
@@ -14,11 +20,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetialsServiceImpl implements UserDetailsService {
 
+
     /**
      * 通过UserName去数据库查询账号密码
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return null;
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + "admin");
+        authorityList.add(authority);
+        SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority("user:add");
+        authorityList.add(authority1);
+        return new User("admin","admin",authorityList);
     }
 }
