@@ -1,6 +1,6 @@
 package cn.zz.Study;
 
-import cn.zz.Study.util.RedisUtil;
+import cn.zz.Study.util.RedisUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -10,7 +10,7 @@ import java.time.Duration;
 
 //测试Redis
 @SpringBootTest
-public class redisTest {
+public class RedisTest {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -46,7 +46,7 @@ public class redisTest {
 
 
         //配置工具类后
-        RedisUtil.set("大罪","愤怒",10);
+        RedisUtils.set("大罪","愤怒",10);
     }
 
 }
