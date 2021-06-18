@@ -53,11 +53,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 //使用Spring自带的登录页，登陆成功跳转的页面（必须是Post请求）
                 .formLogin()
-                .successForwardUrl("/user/index")
+                .successForwardUrl("/index")
                 .and()
                 //开启授权请求
                 .authorizeRequests()
-                .antMatchers("/user/**").permitAll()
+                //放行接口
+//                .antMatchers("/user/**").permitAll()
                 //拦截所有请求，所有请求都需要身份验证
                 .anyRequest().authenticated();
 

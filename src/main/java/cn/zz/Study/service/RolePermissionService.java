@@ -1,6 +1,6 @@
 package cn.zz.Study.service;
 
-import cn.zz.Study.entity.RoePermission;
+import cn.zz.Study.entity.RolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author jobob
- * @since 2021-06-17
+ * @since 2021-06-18
  */
-public interface RoePermissionService extends IService<RoePermission> {
+public interface RolePermissionService extends IService<RolePermission> {
 
 }

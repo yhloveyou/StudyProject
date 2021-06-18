@@ -1,6 +1,6 @@
 package cn.zz.Study.mapper;
 
-import cn.zz.Study.entity.RoePermission;
+import cn.zz.Study.entity.RolePermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author jobob
- * @since 2021-06-17
+ * @since 2021-06-18
  */
-public interface RoePermissionMapper extends BaseMapper<RoePermission> {
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {
 
 }

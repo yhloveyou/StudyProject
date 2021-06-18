@@ -127,7 +127,7 @@ public class MybatisPlusConfig {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         //注释该行 默认生成全部
-//        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         //实体类名称驼峰命名
         strategy.setNaming(NamingStrategy.underline_to_camel);
         //列名名称驼峰命名

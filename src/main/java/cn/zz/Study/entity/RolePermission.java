@@ -12,11 +12,11 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author jobob
- * @since 2021-06-17
+ * @since 2021-06-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RoePermission implements Serializable {
+public class RolePermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
