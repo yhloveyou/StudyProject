@@ -1,4 +1,4 @@
-package cn.zz.Study;
+package cn.zz.Study.Practice;
 
 import cn.zz.Study.util.RedisUtils;
 import org.junit.jupiter.api.Test;

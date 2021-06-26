@@ -6,6 +6,13 @@ spring:
     url: jdbc:mysql://localhost:3306/studyproject?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password:
+  #模板引擎配置
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    encoding: UTF-8 #编码
+    suffix: .html #模板后缀
+    mode: HTML #模板
   #缓存管理器
   cache:
     type: redis

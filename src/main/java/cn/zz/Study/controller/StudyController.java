@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author admin
  * 手写测试Controller
+ * 用来测试权限管理
  */
 @RestController
 public class StudyController {

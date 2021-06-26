@@ -44,7 +44,9 @@ public class UserDetialsServiceImpl implements UserDetailsService {
         List<Long> premissionId = rolePermissionService.list(Wrappers.<RolePermission>lambdaQuery().eq(RolePermission::getRoleId, role.getId()))
                 .stream().map(RolePermission::getPremissionId).collect(Collectors.toList());
         List<Permission> permissions = permissionService.list(Wrappers.<Permission>lambdaQuery().in(Permission::getId, premissionId));
+        //返回的权限
         List<GrantedAuthority> authorityList = new ArrayList<>();
+        //查出权限列表循环放入  authorityList  中
         for (Permission permission : permissions) {
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(permission.getPermissionUrl());
             authorityList.add(simpleGrantedAuthority);

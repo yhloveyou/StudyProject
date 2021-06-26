@@ -1,4 +1,4 @@
-package cn.zz.Study;
+package cn.zz.Study.Practice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
