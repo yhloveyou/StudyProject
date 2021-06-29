@@ -6,6 +6,7 @@ import cn.zz.Study.entity.RolePermission;
 import cn.zz.Study.service.PermissionService;
 import cn.zz.Study.service.RolePermissionService;
 import cn.zz.Study.service.RoleService;
+import cn.zz.Study.service.UserService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,27 +35,39 @@ public class UserDetialsServiceImpl implements UserDetailsService {
     private PermissionService permissionService;
     @Resource
     private RolePermissionService rolePermissionService;
+    @Resource
+    private UserService userService;
     /**
      * 通过UserName去数据库查询账号密码
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        //拿到用户的角色和权限
+        //1、拿到用户的账号，根据账号查询数据
+        cn.zz.Study.entity.User user = userService.getOne(Wrappers.<cn.zz.Study.entity.User>lambdaQuery()
+                .eq(cn.zz.Study.entity.User::getUserPhone, userName));
+
+        //2、拿到用户的角色和权限
         Role role = roleService.getOne(Wrappers.<Role>lambdaQuery().eq(Role::getUserId, 1));
         List<Long> premissionId = rolePermissionService.list(Wrappers.<RolePermission>lambdaQuery().eq(RolePermission::getRoleId, role.getId()))
-                .stream().map(RolePermission::getPremissionId).collect(Collectors.toList());
+                .stream()
+                .map(RolePermission::getPremissionId)
+                .collect(Collectors.toList());
         List<Permission> permissions = permissionService.list(Wrappers.<Permission>lambdaQuery().in(Permission::getId, premissionId));
-        //返回的权限
+
+        //3、返回的权限
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        //查出权限列表循环放入  authorityList  中
+
+        //4、查出权限列表循环放入  authorityList  中
         for (Permission permission : permissions) {
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(permission.getPermissionUrl());
             authorityList.add(simpleGrantedAuthority);
         }
+
 //        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + "admin");
 //        authorityList.add(authority);
 //        SimpleGrantedAuthority authority1 = new SimpleGrantedAuthority("study:add");
 //        authorityList.add(authority1);
-        return new User("admin","$2a$10$kkPpRCSQJii1BdV77TqAbuWtBFAvtUGqFor.AbyGxGT.avFH/buU2",authorityList);
+
+        return new User(user.getUserPhone(),user.getUserPassword(),authorityList);
     }
 }
