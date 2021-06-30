@@ -29,4 +29,9 @@ public class StudyController {
     public String delete(){
         return "得到授权    ==>>    删除操作";
     }
+
+    @GetMapping("/add")
+    public String add(){
+        return "访问添加页面";
+    }
 }

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * UserDetailsService接口用于返回用户相关数据。它有loadUserByUsername()方法
  * 根据username查询用户实体，可以实现该接口覆盖该方法，实现自定义获取用户过程。
  * 该接口实现类被DaoAuthenticationProvider 类使用，用于认证过程中载入用户信息。
+ * 不适用token时可这么使用
  * @author admin
  */
 @Service

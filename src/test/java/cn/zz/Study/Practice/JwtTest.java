@@ -54,5 +54,9 @@ public class JwtTest {
         System.out.println(jwt.getClaim("userName").asString());
         System.out.println(jwt.getExpiresAt());
         System.out.println(jwt.getAudience());
+
+
+        System.out.println(JWT.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIiwiZXhwIjoxNjI1MDM3MzA4LCJ1c2VyTmFtZSI6IumBl-W_mCIsImlhdCI6MTYyNTAzNTUwOH0.-mrXH4_NQci7YEk1HfR1xp1tgGzwFIoYdhvZWFm1L_U")
+                .getClaim("userName").asString());
     }
 }
