@@ -1,6 +1,7 @@
 package cn.zz.Study.service;
 
 public interface LoginService {
+
     /**
      * 账号密码登录
      * @param phone

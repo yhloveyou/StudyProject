@@ -7,6 +7,7 @@ import cn.zz.Study.service.PermissionService;
 import cn.zz.Study.service.RolePermissionService;
 import cn.zz.Study.service.RoleService;
 import cn.zz.Study.util.JwtUtils;
+import cn.zz.Study.util.RedisUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,13 @@ import java.util.stream.Collectors;
 /**
  * @author admin
  * 过滤器 发起请求前检验Token 实现并在每次请求时只执行一次过滤
+ * 在spring中，filter都默认继承OncePerRequestFilter
+ * OncePerRequestFilter顾名思义，他能够确保在一次请求只通过一次filter，而不需要重复执行
+ * 为了兼容不同的web container，特意而为之
+ *
+ * 在servlet2.3中，Filter会经过一切请求，包括服务器内部使用的forward转发请求和<%@ include file=”/login.jsp”%>的情况
+ *
+ * servlet2.4中的Filter默认情况下只过滤外部提交的请求，forward和include这些内部转发都不会被过滤，
  */
 @Component
 @Slf4j
@@ -55,8 +63,15 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, @NotNull HttpServletResponse httpServletResponse, @NotNull FilterChain filterChain) throws ServletException, IOException {
         //获取Token
         String token = httpServletRequest.getHeader("token");
-        //检验Token
+        //检验Token合法性
         if (token == null) {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
+        //比对Redis中存储的Token
+        String redisToken = RedisUtils.get(JwtUtils.getAudience(token)).toString();
+        if (!redisToken.equals(token)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }

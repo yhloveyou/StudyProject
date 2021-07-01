@@ -18,6 +18,12 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    /**
+     * 账号密码登录
+     * @param phone
+     * @param password
+     * @return
+     */
     @GetMapping("/password/{phone}/{password}")
     public String password(@PathVariable String phone,@PathVariable String password){
         return loginService.login(phone,password);

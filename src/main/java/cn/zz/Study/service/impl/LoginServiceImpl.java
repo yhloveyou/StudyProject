@@ -5,6 +5,7 @@ import cn.zz.Study.service.LoginService;
 import cn.zz.Study.service.UserService;
 import cn.zz.Study.util.JwtUtils;
 import cn.zz.Study.util.MD5Utils;
+import cn.zz.Study.util.RedisUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,9 @@ public class LoginServiceImpl implements LoginService {
         if (ObjectUtils.isEmpty(user)) {
             return "不存在该账号密码";
         }
-        //返回token
+        //不管Redis是否存在Token 都创建Token 已存在Token再去创建是因为做刷新Token操作
         String token = JwtUtils.createToken(String.valueOf(user.getId()), user.getUserName());
+        RedisUtils.set(String.valueOf(user.getId()),token,60 * 30);
         return token;
     }
 }

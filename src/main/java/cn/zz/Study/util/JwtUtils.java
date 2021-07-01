@@ -10,6 +10,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 它是html5新增的一个本地存储API，所谓localStorage就是一个小仓库的意思，
+ * 它有5M的大小空间，存储在浏览器中，我们可以通过js来操纵localStorage。
+ */
 public class JwtUtils {
     /**
      签发对象：这个用户的id
