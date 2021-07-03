@@ -49,7 +49,9 @@ public class UserDetialsServiceImpl implements UserDetailsService {
 
         //2、拿到用户的角色和权限
         Role role = roleService.getOne(Wrappers.<Role>lambdaQuery().eq(Role::getUserId, 1));
-        List<Long> premissionId = rolePermissionService.list(Wrappers.<RolePermission>lambdaQuery().eq(RolePermission::getRoleId, role.getId()))
+        List<Long> premissionId = rolePermissionService
+                .list(Wrappers.<RolePermission>lambdaQuery()
+                .eq(RolePermission::getRoleId, role.getId()))
                 .stream()
                 .map(RolePermission::getPremissionId)
                 .collect(Collectors.toList());

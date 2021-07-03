@@ -1,5 +1,6 @@
 package cn.zz.Study.controller;
 
+import cn.zz.Study.common.Result;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,6 @@ public class StudyController {
 
     @GetMapping("/add")
     public String add(){
-        return "访问添加页面";
+        return Result.ok();
     }
 }

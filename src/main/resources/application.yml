@@ -30,3 +30,6 @@ spring:
         min-idle: 0 #连接池中的最小空闲连接
     lettuce:
       shutdown-timeout: 100ms #关闭超时时间，默认值100ms
+#jwt
+Jwt:
+  secret: D1CVjXn75eABnL2b

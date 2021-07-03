@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,10 @@ import java.util.Date;
  * 它有5M的大小空间，存储在浏览器中，我们可以通过js来操纵localStorage。
  */
 public class JwtUtils {
+    @Value("{Jwt.secret}")
+    private static String secret;
+
+
     /**
      签发对象：这个用户的id
      签发时间：现在
@@ -27,19 +32,19 @@ public class JwtUtils {
         Calendar nowTime = Calendar.getInstance();
         nowTime.add(Calendar.MINUTE,30);
         Date expiresDate = nowTime.getTime();
-
-        return JWT.create().withAudience(userId)   //签发对象
+        //签发对象
+        return JWT.create().withAudience(userId)
                 .withIssuedAt(new Date())    //发行时间
                 .withExpiresAt(expiresDate)  //有效时间
                 .withClaim("userName", userName)    //载荷，随便写几个都可以
-                .sign(Algorithm.HMAC256(userId+"WDNMD"));   //加密
+                .sign(Algorithm.HMAC256(secret+"WDNMD"));   //加密
     }
 
     /**
      * 检验合法性，其中secret参数就应该传入的是用户的id
      * @param token
      */
-    public static void verifyToken(String token, String secret){
+    public static void verifyToken(String token){
         DecodedJWT jwt = null;
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret+"WDNMD")).build();

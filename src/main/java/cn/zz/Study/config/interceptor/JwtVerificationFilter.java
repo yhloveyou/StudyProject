@@ -1,5 +1,6 @@
 package cn.zz.Study.config.interceptor;
 
+import cn.zz.Study.common.ErrorCode;
 import cn.zz.Study.entity.Permission;
 import cn.zz.Study.entity.Role;
 import cn.zz.Study.entity.RolePermission;
@@ -63,11 +64,15 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, @NotNull HttpServletResponse httpServletResponse, @NotNull FilterChain filterChain) throws ServletException, IOException {
         //获取Token
         String token = httpServletRequest.getHeader("token");
-        //检验Token合法性
+
+        //非空校验
         if (token == null) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
+//
+//        //检验Token合法性
+//        JwtUtils.verifyToken(token);
 
         //比对Redis中存储的Token
         String redisToken = RedisUtils.get(JwtUtils.getAudience(token)).toString();
@@ -91,13 +96,12 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     /**
      * 查找权限
-     * @param userId
-     * @return
      */
     private List<GrantedAuthority> findAllAuthority(Long userId){
         //1、拿到用户的角色和权限
         Role role = roleService.getOne(Wrappers.<Role>lambdaQuery().eq(Role::getUserId, userId));
-        List<Long> premissionId = rolePermissionService.list(Wrappers.<RolePermission>lambdaQuery().eq(RolePermission::getRoleId, role.getId()))
+        List<Long> premissionId = rolePermissionService.list(Wrappers.<RolePermission>lambdaQuery()
+                .eq(RolePermission::getRoleId, role.getId()))
                 .stream()
                 .map(RolePermission::getPremissionId)
                 .collect(Collectors.toList());
