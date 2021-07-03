@@ -1,5 +1,7 @@
 package cn.zz.Study.controller;
 
+import cn.zz.Study.common.CustomizeException;
+import cn.zz.Study.common.ErrorCode;
 import cn.zz.Study.common.Result;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,9 @@ public class StudyController {
 
     @GetMapping("/add")
     public String add(){
+        if (1<2) {
+            throw new CustomizeException(ErrorCode.PARAMETER_ERROR);
+        }
         return Result.ok();
     }
 }
