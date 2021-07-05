@@ -1,5 +1,6 @@
 package cn.zz.Study.service.impl;
 
+import cn.zz.Study.common.RedisPrefixKey;
 import cn.zz.Study.entity.User;
 import cn.zz.Study.service.LoginService;
 import cn.zz.Study.service.UserService;
@@ -38,7 +39,7 @@ public class LoginServiceImpl implements LoginService {
         }
         //不管Redis是否存在Token 都创建Token 已存在Token再去创建是因为做刷新Token操作
         String token = JwtUtils.createToken(String.valueOf(user.getId()), user.getUserName());
-        RedisUtils.set(String.valueOf(user.getId()),token,60 * 30);
+        RedisUtils.set(RedisPrefixKey.LOGIN_TOKEN.keyAppend(user.getId()).getKey(),token,RedisPrefixKey.LOGIN_TOKEN.getExpiredTime());
         return token;
     }
 }

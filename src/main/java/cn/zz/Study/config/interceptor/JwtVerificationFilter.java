@@ -1,6 +1,7 @@
 package cn.zz.Study.config.interceptor;
 
 import cn.zz.Study.common.ErrorCode;
+import cn.zz.Study.common.RedisPrefixKey;
 import cn.zz.Study.entity.Permission;
 import cn.zz.Study.entity.Role;
 import cn.zz.Study.entity.RolePermission;
@@ -54,11 +55,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
      * 过滤器，检验Token
      * 发起请求时会调用两次，第二次是展示/favicon.ico
      *
-     * @param httpServletRequest
-     * @param httpServletResponse
-     * @param filterChain
-     * @throws ServletException
-     * @throws IOException
      */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, @NotNull HttpServletResponse httpServletResponse, @NotNull FilterChain filterChain) throws ServletException, IOException {
@@ -73,9 +69,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 //
 //        //检验Token合法性
 //        JwtUtils.verifyToken(token);
-
+        JwtUtils.getAudience(token);
         //比对Redis中存储的Token
-        String redisToken = RedisUtils.get(JwtUtils.getAudience(token)).toString();
+        String redisToken = RedisUtils.get(RedisPrefixKey.LOGIN_TOKEN.keyAppend(JwtUtils.getAudience(token)).getKey())
+                .toString();
         if (!redisToken.equals(token)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
