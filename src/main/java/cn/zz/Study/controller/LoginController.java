@@ -33,5 +33,12 @@ public class LoginController {
         return Result.ok(loginService.login(loginVO));
     }
 
+    /**
+     * 邮件测试
+     */
+    @GetMapping("/test")
+    public String test(){
+        return Result.ok(1/0);
+    }
 }
 

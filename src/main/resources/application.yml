@@ -30,6 +30,16 @@ spring:
         min-idle: 0 #连接池中的最小空闲连接
     lettuce:
       shutdown-timeout: 100ms #关闭超时时间，默认值100ms
+  mail:
+    host:  smtp.163.com #发送邮件服务器
+    username: gz852963511@163.com #发送邮件的邮箱地址
+    password: DBZPVXPRFQBWGINO   #(如果是阿里云)阿里云邮箱没有qq邮箱所谓的授权码,所以此处填的是阿里云的登陆密码
+    from: gz852963511@163.com   # 发送邮件的地址，和上面username一致
+    to: 1596626964@qq.com     # 接受邮件的地址
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true
+    default-encoding: utf-8
 #jwt
 Jwt:
   secret: D1CVjXn75eABnL2b

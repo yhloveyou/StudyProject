@@ -92,6 +92,18 @@
             <artifactId>java-jwt</artifactId>
             <version>3.10.3</version>
         </dependency>
+<!--        字符串转换为JsonObject、JsonArray、JavaBean等,依赖Json实现-->
+        <dependency>
+            <groupId>top.jfunc.common</groupId>
+            <artifactId>converter</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+<!--        邮件报警所需-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
     </dependencies>
 
     <build>
