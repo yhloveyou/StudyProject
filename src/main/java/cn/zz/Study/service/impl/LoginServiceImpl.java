@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * @author admin
+ */
 @Service
 public class LoginServiceImpl implements LoginService {
     @Resource

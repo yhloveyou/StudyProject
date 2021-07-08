@@ -58,6 +58,38 @@ public class Result<T> {
                 .setData(data)
                 .mineToString();
     }
+
+    public static<T> String no(){
+        return new Result<T>()
+                .setSuccess(false)
+                .setMsg(ErrorCode.FAIL.getMsg())
+                .setCode(ErrorCode.FAIL.getCode())
+                .mineToString();
+    }
+
+    public static<T> String no(ErrorCode errorCode){
+        return new Result<T>()
+                .setSuccess(false)
+                .setCode(errorCode.getCode())
+                .setMsg(errorCode.getMsg())
+                .mineToString();
+    }
+
+    public static<T> String no(String msg){
+        return new Result<T>()
+                .setSuccess(false)
+                .setMsg(msg)
+                .setCode(ErrorCode.FAIL.getCode())
+                .mineToString();
+    }
+
+    public static<T> String no(String msg,int code){
+        return new Result<T>()
+                .setSuccess(false)
+                .setMsg(msg)
+                .setCode(code)
+                .mineToString();
+    }
     /**
      * 骗骗javac编译器
      * 看上去是抛异常的实际上并不~~~

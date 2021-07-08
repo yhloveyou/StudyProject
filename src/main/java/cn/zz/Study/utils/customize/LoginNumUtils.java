@@ -11,11 +11,8 @@ import org.springframework.stereotype.Component;
  * @author admin
  * 限制登录次数
  * @value()使用 1.不能作用于静态变量（static）；
- * <p>
  * 2.不能作用于常量（final）;
- * <p>
  * 3.不能在非注册的类中使用（类需要被注册在spring上下文中，如用@Service,@RestController,@Component等）；
- * <p>
  * 4.使用这个类时，只能通过依赖注入的方式，用new的方式是不会自动注入这些配置的。
  */
 @Component

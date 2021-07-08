@@ -2,6 +2,8 @@ package cn.zz.Study.common;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 运行时异常类 继承 RuntimeException
@@ -9,7 +11,9 @@ import lombok.AllArgsConstructor;
  * @author admin
  * @AllArgsConstructor 提供无参构造
  */
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
+@Data
 public class CustomizeException extends RuntimeException{
     private final int code;
 

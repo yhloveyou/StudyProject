@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
 public enum ErrorCode {
     //正常
     SUCCESS(0,"正常"),
+    FAIL(1,"服务器错误"),
 
     //常见错误
     PARAMETER_ERROR(10001,"参数错误"),
