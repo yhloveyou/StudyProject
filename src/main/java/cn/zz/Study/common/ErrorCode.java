@@ -12,9 +12,15 @@ public enum ErrorCode {
 
     //常见错误
     PARAMETER_ERROR(10001,"参数错误"),
+    LOGIN_ERROR(10002,"密码错误"),
+    LOGIN_NUM_ERROR(10003,"登陆失败次数超过限制"),
 
     //数据异常错误
-    DATA_ERROR(20001,"不存在该数据，请刷新后重试")
+    DATA_ERROR(20001,"不存在该数据，请刷新后重试"),
+    PASSWORD_ERROR(20002,"密码错误"),
+
+    //Token解析失败
+    TOKEN_ANALYSIS_FAIL(30001,"安全令牌解析失败，请重新登录或刷新重试"),
 
 
 

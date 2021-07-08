@@ -1,15 +1,18 @@
 package cn.zz.Study.controller;
 
+import cn.zz.Study.common.CustomizeException;
+import cn.zz.Study.common.ErrorCode;
+import cn.zz.Study.common.Result;
+import cn.zz.Study.common.vo.LoginVO;
 import cn.zz.Study.service.LoginService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 /**
  * 使用Thymeleaf测试登录
+ *
  * @author admin
  */
 @RestController
@@ -20,13 +23,14 @@ public class LoginController {
 
     /**
      * 账号密码登录
-     * @param phone
-     * @param password
-     * @return
      */
-    @GetMapping("/password/{phone}/{password}")
-    public String password(@PathVariable String phone,@PathVariable String password){
-        return loginService.login(phone,password);
+    @PostMapping("/password")
+    public String password(@RequestBody LoginVO loginVO) {
+        //非空判断
+        if (ObjectUtils.isEmpty(loginVO) || loginVO.getPhone() == null || loginVO.getPassWord() == null) {
+            throw new CustomizeException(ErrorCode.PARAMETER_ERROR);
+        }
+        return Result.ok(loginService.login(loginVO));
     }
 
 }

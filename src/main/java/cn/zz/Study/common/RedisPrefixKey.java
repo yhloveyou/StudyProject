@@ -11,7 +11,12 @@ public class RedisPrefixKey {
     /**
      * 登录Token
      */
-    public static final RedisNeed LOGIN_TOKEN = new RedisNeed("loginTK:",30*30*30);
+    public static final RedisNeed LOGIN_TOKEN = new RedisNeed("LoginTK:", 30 * 30 * 30);
+
+    /**
+     * 登录次数
+     */
+    public static final RedisNeed LOGIN_NUM = new RedisNeed("LoginNum:", 30 * 30 * 30);
 
     /**
      * 内部类 为 RedisPrefixKey提供
@@ -30,9 +35,9 @@ public class RedisPrefixKey {
         }
 
         public RedisNeed keyAppend(Object key) {
-            StringBuilder sb =new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.append(this.key).append(key);
-            return new RedisNeed(sb.toString(),expiredTime);
+            return new RedisNeed(sb.toString(), expiredTime);
         }
 
         public String getKey() {

@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 
-/**
- * @author admin
- */
+
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
+/**
+ *  * @author admin
+ * 因为返回值花样比较多，因此定义泛型，T可以是任意类型
+ */
 public class Result<T> {
     private boolean success;
 
@@ -40,10 +42,22 @@ public class Result<T> {
 
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
-    public static String ok(){
-        return new Result().setSuccess(true).setCode(ErrorCode.SUCCESS.getCode()).setMsg(ErrorCode.SUCCESS.getMsg()).mineToString();
+    public static<T> String ok(){
+        return new Result<T>()
+                .setSuccess(true)
+                .setCode(ErrorCode.SUCCESS.getCode())
+                .setMsg(ErrorCode.SUCCESS.getMsg())
+                .mineToString();
     }
 
+    public static<T> String ok(T data){
+        return new Result<T>()
+                .setSuccess(true)
+                .setCode(ErrorCode.SUCCESS.getCode())
+                .setMsg(ErrorCode.SUCCESS.getMsg())
+                .setData(data)
+                .mineToString();
+    }
     /**
      * 骗骗javac编译器
      * 看上去是抛异常的实际上并不~~~

@@ -1,4 +1,4 @@
-package cn.zz.Study.util;
+package cn.zz.Study.utils;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public final class RedisUtils {
     @Resource
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     private static RedisTemplate<String, Object> that;
 
@@ -28,7 +28,7 @@ public final class RedisUtils {
     public void init() {
         that = redisTemplate;
     }
-    
+
 
     // =============================common============================
 
@@ -38,7 +38,7 @@ public final class RedisUtils {
      * @param key  键
      * @param time 时间(秒)
      */
-    public static boolean expire(String key, long time) {
+    public static boolean expire(String key, Long time) {
         try {
             if (time > 0) {
                 that.expire(key, time, TimeUnit.SECONDS);
@@ -56,7 +56,7 @@ public final class RedisUtils {
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public static long getExpire(String key) {
+    public static Long getExpire(String key) {
         return that.getExpire(key, TimeUnit.SECONDS);
     }
 
@@ -134,7 +134,7 @@ public final class RedisUtils {
      * @return true成功 false 失败
      */
 
-    public static boolean set(String key, Object value, long time) {
+    public static boolean set(String key, Object value, Integer time) {
         try {
             if (time > 0) {
                 that.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -155,7 +155,7 @@ public final class RedisUtils {
      * @param key   键
      * @param delta 要增加几(大于0)
      */
-    public static long incr(String key, long delta) {
+    public static Long incr(String key, Long delta) {
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
@@ -169,7 +169,7 @@ public final class RedisUtils {
      * @param key   键
      * @param delta 要减少几(小于0)
      */
-    public static long decr(String key, long delta) {
+    public static Long decr(String key, Long delta) {
         if (delta < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
@@ -224,7 +224,7 @@ public final class RedisUtils {
      * @param time 时间(秒)
      * @return true成功 false失败
      */
-    public static boolean hmset(String key, Map<String, Object> map, long time) {
+    public static boolean hmset(String key, Map<String, Object> map, Long time) {
         try {
             that.opsForHash().putAll(key, map);
             if (time > 0) {
@@ -265,7 +265,7 @@ public final class RedisUtils {
      * @param time  时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
      * @return true 成功 false失败
      */
-    public static boolean hset(String key, String item, Object value, long time) {
+    public static boolean hset(String key, String item, Object value, Long time) {
         try {
             that.opsForHash().put(key, item, value);
             if (time > 0) {
@@ -367,12 +367,12 @@ public final class RedisUtils {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public static long sSet(String key, Object... values) {
+    public static Long sSet(String key, Object... values) {
         try {
             return that.opsForSet().add(key, values);
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
     }
 
@@ -385,7 +385,7 @@ public final class RedisUtils {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public static long sSetAndTime(String key, long time, Object... values) {
+    public static Long sSetAndTime(String key, Long time, Object... values) {
         try {
             Long count = that.opsForSet().add(key, values);
             if (time > 0) {
@@ -394,7 +394,7 @@ public final class RedisUtils {
             return count;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
     }
 
@@ -404,12 +404,12 @@ public final class RedisUtils {
      *
      * @param key 键
      */
-    public static long sGetSetSize(String key) {
+    public static Long sGetSetSize(String key) {
         try {
             return that.opsForSet().size(key);
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
     }
 
@@ -422,13 +422,13 @@ public final class RedisUtils {
      * @return 移除的个数
      */
 
-    public static long setRemove(String key, Object... values) {
+    public static Long setRemove(String key, Object... values) {
         try {
             Long count = that.opsForSet().remove(key, values);
             return count;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
     }
 
@@ -441,7 +441,7 @@ public final class RedisUtils {
      * @param start 开始
      * @param end   结束 0 到 -1代表所有值
      */
-    public static List<Object> lGet(String key, long start, long end) {
+    public static List<Object> lGet(String key, Long start, Long end) {
         try {
             return that.opsForList().range(key, start, end);
         } catch (Exception e) {
@@ -456,12 +456,12 @@ public final class RedisUtils {
      *
      * @param key 键
      */
-    public static long lGetListSize(String key) {
+    public static Long lGetListSize(String key) {
         try {
             return that.opsForList().size(key);
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
     }
 
@@ -472,7 +472,7 @@ public final class RedisUtils {
      * @param key   键
      * @param index 索引 index>=0时，0表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素依次类推
      */
-    public static Object lGetIndex(String key, long index) {
+    public static Object lGetIndex(String key, Long index) {
         try {
             return that.opsForList().index(key, index);
         } catch (Exception e) {
@@ -506,7 +506,7 @@ public final class RedisUtils {
      * @param value 值
      * @param time  时间(秒)
      */
-    public static boolean lSet(String key, Object value, long time) {
+    public static boolean lSet(String key, Object value, Long time) {
         try {
             that.opsForList().rightPush(key, value);
             if (time > 0) {
@@ -548,7 +548,7 @@ public final class RedisUtils {
      * @param time  时间(秒)
      * @return
      */
-    public static boolean lSet(String key, List<Object> value, long time) {
+    public static boolean lSet(String key, List<Object> value, Long time) {
         try {
             that.opsForList().rightPushAll(key, value);
             if (time > 0) {
@@ -571,7 +571,7 @@ public final class RedisUtils {
      * @return
      */
 
-    public static boolean lUpdateIndex(String key, long index, Object value) {
+    public static boolean lUpdateIndex(String key, Long index, Object value) {
         try {
             that.opsForList().set(key, index, value);
             return true;
@@ -591,18 +591,23 @@ public final class RedisUtils {
      * @return 移除的个数
      */
 
-    public static long lRemove(String key, long count, Object value) {
+    public static Long lRemove(String key, Long count, Object value) {
         try {
             Long remove = that.opsForList().remove(key, count, value);
             return remove;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return 0L;
         }
 
     }
+
     public static Boolean setNx(String key, String data) {
         return that.opsForValue().setIfAbsent(key, data);
+    }
+
+    public static Boolean setNx(String key, String data, int seconds) {
+        return that.opsForValue().setIfAbsent(key, data, seconds, TimeUnit.SECONDS);
     }
 
 }

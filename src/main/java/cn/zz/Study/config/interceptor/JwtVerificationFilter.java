@@ -1,6 +1,5 @@
 package cn.zz.Study.config.interceptor;
 
-import cn.zz.Study.common.ErrorCode;
 import cn.zz.Study.common.RedisPrefixKey;
 import cn.zz.Study.entity.Permission;
 import cn.zz.Study.entity.Role;
@@ -8,8 +7,8 @@ import cn.zz.Study.entity.RolePermission;
 import cn.zz.Study.service.PermissionService;
 import cn.zz.Study.service.RolePermissionService;
 import cn.zz.Study.service.RoleService;
-import cn.zz.Study.util.JwtUtils;
-import cn.zz.Study.util.RedisUtils;
+import cn.zz.Study.utils.JwtUtils;
+import cn.zz.Study.utils.RedisUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -66,9 +65,8 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
-//
-//        //检验Token合法性
-//        JwtUtils.verifyToken(token);
+
+        //检验Token合法性
         JwtUtils.getAudience(token);
         //比对Redis中存储的Token
         String redisToken = RedisUtils.get(RedisPrefixKey.LOGIN_TOKEN.keyAppend(JwtUtils.getAudience(token)).getKey())

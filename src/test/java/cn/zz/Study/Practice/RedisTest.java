@@ -1,6 +1,6 @@
 package cn.zz.Study.Practice;
 
-import cn.zz.Study.util.RedisUtils;
+import cn.zz.Study.utils.RedisUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;

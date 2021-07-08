@@ -1,12 +1,11 @@
 package cn.zz.Study.service;
 
+import cn.zz.Study.common.vo.LoginVO;
+
 public interface LoginService {
 
     /**
      * 账号密码登录
-     * @param phone
-     * @param password
-     * @return
      */
-    String login(String phone,String password);
+    String login(LoginVO loginVO);
 }

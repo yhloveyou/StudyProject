@@ -33,3 +33,7 @@ spring:
 #jwt
 Jwt:
   secret: D1CVjXn75eABnL2b
+#规定时间内登录次数限制
+LoginConfig:
+  num: 10
+  time: 216000 #时间 ： 秒
