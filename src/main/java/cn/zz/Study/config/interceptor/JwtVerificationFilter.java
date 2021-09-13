@@ -110,6 +110,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(permission.getPermissionUrl());
             authorityList.add(simpleGrantedAuthority);
         }
+
+        //也可以查询用户的角色，根据角色来验证，最好角色加权限相结合
+//        authorityList.add( new SimpleGrantedAuthority("ROLE_admin"));
         return authorityList;
     }
 }
