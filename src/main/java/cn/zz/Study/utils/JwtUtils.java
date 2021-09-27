@@ -11,6 +11,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,15 +40,14 @@ public class JwtUtils {
      */
     public static String createToken(String userId, String userName) {
 
-        Calendar nowTime = Calendar.getInstance();
-        nowTime.add(Calendar.MINUTE, 30);
-        Date expiresDate = nowTime.getTime();
+        LocalTime hours = LocalTime.now().plusMinutes(30);
+        Date times = Date.from(hours.atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant());
         //签发对象
         return JWT.create().withAudience(userId)
                 //发行时间
                 .withIssuedAt(new Date())
                 //有效时间
-                .withExpiresAt(expiresDate)
+                .withExpiresAt(times)
                 //载荷，随便写几个都可以
                 .withClaim("userName", userName)
                 //加密
@@ -53,19 +55,14 @@ public class JwtUtils {
     }
 
     /**
-     * 检验合法性，其中secret参数就应该传入的是用户的id
-     *
-     * @param token
+     * 检查Token，获取Token中的内容
      */
     public static void verifyToken(String token) {
-        DecodedJWT jwt = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret + "WDNMD")).build();
-            jwt = verifier.verify(token);
+            JWT.require(Algorithm.HMAC256(secret + "WDNMD")).build().verify(token);
         } catch (Exception e) {
-            //效验失败
-            //这里抛出的异常是我自定义的一个异常，你也可以写成别的
-
+            //这里是token解析失败
+            throw new CustomizeException(ErrorCode.TOKEN_ANALYSIS_FAIL);
         }
     }
 
@@ -83,11 +80,10 @@ public class JwtUtils {
         return audience;
     }
 
-
     /**
      * 通过载荷名字获取载荷的值
      */
-    public static Claim getClaimByName(String token, String name) {
+    public static Claim getClaimByName(String token, String name){
         return JWT.decode(token).getClaim(name);
     }
 }

@@ -1,4 +1,4 @@
-package cn.zz.Study.config.interceptor;
+package cn.zz.Study.config.Filter;
 
 import cn.zz.Study.common.RedisPrefixKey;
 import cn.zz.Study.entity.Permission;
@@ -67,7 +67,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         }
 
         //检验Token合法性
-        JwtUtils.getAudience(token);
+        JwtUtils.verifyToken(token);
         //比对Redis中存储的Token
         String redisToken = RedisUtils.get(RedisPrefixKey.LOGIN_TOKEN.keyAppend(JwtUtils.getAudience(token)).getKey())
                 .toString();

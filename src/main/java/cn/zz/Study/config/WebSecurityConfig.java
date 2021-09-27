@@ -1,6 +1,6 @@
 package cn.zz.Study.config;
 
-import cn.zz.Study.config.interceptor.JwtVerificationFilter;
+import cn.zz.Study.config.Filter.JwtVerificationFilter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +18,10 @@ import javax.annotation.Resource;
  * 在继承 WebSecurityConfigurerAdapter 这个类的类上面贴上这个注解
  * 并且prePostEnabled设置为true,@PreAuthorize这个注解才能生效
  * SpringSecurity默认是关闭注解功能的.
+ *
+ * prePostEnabled： 确定 前置注解[@PreAuthorize,@PostAuthorize,..] 是否启用
+ * securedEnabled： 确定安全注解 [@Secured] 是否启用
+ * jsr250Enabled： 确定 JSR-250注解 [@RolesAllowed..]是否启用
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
