@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan("cn.zz.Study.mapper")
 public class StudyApplication {
-
+    //测试
     public static void main(String[] args) {
         SpringApplication.run(StudyApplication.class, args);
     }
